@@ -24,11 +24,11 @@ public class ResultController {
 	}
 
 	// get user by id
-	@GetMapping("/{id}")
-	public Result getUserById(@PathVariable (value = "id") long userId) {
-		return this.resultRepository.findById(userId)
-				.orElseThrow(() -> new ResourceNotFoundException("User not found with id :" + userId));
-	}
+	//@GetMapping("/{id}")
+	//public Result getUserById(@PathVariable (value = "id") long userId) {
+	//	return this.resultRepository.findAllById(userId)
+	//			.orElseThrow(() -> new ResourceNotFoundException("User not found with id :" + userId));
+	//}
 
 	// create user
 	@PostMapping
