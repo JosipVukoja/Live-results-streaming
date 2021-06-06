@@ -34,9 +34,6 @@ Communication between services should be HTTP, match-end-result-generator should
 POST method for sending match-end-result-event to match-end-result-sinking-service.
 
 
-![image](https://user-images.githubusercontent.com/58112131/120935804-cdb63880-c704-11eb-9bd6-c5fae7917ad3.png)
-
-
 You should spin up database with help of docker container using docker-compose. Docker compo
 file needs to be in code repository.
 
@@ -48,3 +45,4 @@ structure like ConcurrentHashMap, spin up a separate thread using java’s Execu
 check for match-end-result-event in memory structure and insert to database if any exist. After ev
 is inserted in database remove saved event form memory structure.
 
+![image](https://user-images.githubusercontent.com/58112131/120935804-cdb63880-c704-11eb-9bd6-c5fae7917ad3.png)
