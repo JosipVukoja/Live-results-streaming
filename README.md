@@ -33,6 +33,10 @@ Postgress). It should be developed in Java as a Spring Boot application.
 Communication between services should be HTTP, match-end-result-generator should use HTTP
 POST method for sending match-end-result-event to match-end-result-sinking-service.
 
+
+![image](https://user-images.githubusercontent.com/58112131/120935804-cdb63880-c704-11eb-9bd6-c5fae7917ad3.png)
+
+
 You should spin up database with help of docker container using docker-compose. Docker compo
 file needs to be in code repository.
 
