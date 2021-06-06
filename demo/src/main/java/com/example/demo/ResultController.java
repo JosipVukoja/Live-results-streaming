@@ -1,10 +1,11 @@
 package com.example.demo;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,23 +18,45 @@ public class ResultController {
 	@Autowired
 	private ResultRepository resultRepository;
 
-	// get all users
+	@Autowired
+	private HashRepository hashRepository;
+
+
 	@GetMapping
-	public List<Result> getAllUsers() {
+	public List<Result> getAllResults() {
 		return this.resultRepository.findAll();
 	}
 
-	// get user by id
-	//@GetMapping("/{id}")
-	//public Result getUserById(@PathVariable (value = "id") long userId) {
-	//	return this.resultRepository.findAllById(userId)
-	//			.orElseThrow(() -> new ResourceNotFoundException("User not found with id :" + userId));
-	//}
-
-	// create user
 	@PostMapping
-	public Result createUser(@RequestBody Result user) {
-		return this.resultRepository.save(user);
+	public Result createResult(@RequestBody Result user) {
+		hashRepository.add(user);
+
+		ExecutorService exec = Executors.newSingleThreadExecutor();
+		exec.execute(
+			()->{
+				if(hashRepository.isEmptyResult()==true){
+					
+					exec.shutdown();
+					
+				}
+
+				else{
+				
+					List<Result> list = hashRepository.findAll();
+					for (Result resultElement : list) {
+						String PrimaryKey = resultElement.getmatchID();
+						resultRepository.save(resultElement);
+						hashRepository.delete(PrimaryKey);
+
+					}
+
+				}
+
+
+			});
+
+		
+		return null;
 	}
 	
 }
